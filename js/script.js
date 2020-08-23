@@ -49,13 +49,8 @@ function securePassword(array) {
   }
 
 
-  // Create secure password based on user input
+  // Create random password based on user input
   function criteria() {       
-    // types.toLowerCase(); //Do I need to make the conditions all types.toLowerCase for this to work? Add capitals to the condition? Create a variable that holds the toLowerCase value of "types"?
-    // if (types !== "u" && types !== "l" && types !== "s" && types !== "n" && types !== "all") {
-    //     alert("Please try again and select valid criteria");  //!! Bug: it just loops endlessly on this alert
-    // } else {
-
      
       if (types.includes("u")) {      
           randomizeU;
@@ -77,22 +72,23 @@ function securePassword(array) {
           randomizeAll;
           password.push(randomizeAll());
       }
-    
+    // Shuffles random password for added security and randomization
     securePassword(password);
     pwString.push(password.join(""));
-    console.log(pwString);
-    console.log(password.join(""));
     return pwString[pwString.length - 1];
     } 
 
-function generator() { 
+// Collect and validate user input for password
+function generator() {   
+    if (password.length > 0){
+        password = [];
+    } 
     var finalPassword = "";
     var pwLength = prompt("Select a length for your password. Password must be at least 8 characters and no more than 128 characters.");
         //Only proceed if user selects a valid length
-
-        if (pwLength < 8 || pwLength > 128) {     //TODO: I need another || condition or something here because if I type a letter it still works. Must be numbers only!
-            alert("Please select a valid length");
-            pwLength;
+    
+        if (pwLength < 8 || pwLength > 128) {      //!! Bug with validating that only numerical values are entered.
+            alert("Please select a valid length.");
 
         } else {    
             types = prompt("Select the character types that you want in your password. Type 'u' for uppercase, 'l' for lowercase, 'n' for number, and 's' for special characters. Type 'all' to include all character types."); 
@@ -104,16 +100,16 @@ function generator() {
                 finalPassword = criteria();
             }
         }
-    return finalPassword;    //writePassword();
+    return finalPassword;    
 }
 
-// Write password to the #password input
+// Write password and display in text area
 function writePassword() {
-    var password = generator();  //pwString[pwString.length - 1];  //In the solution, this is actually the result of the function 
+    var passwordPrint = generator();  //pwString[pwString.length - 1];  
     var passwordText = document.querySelector("#password");
-    passwordText.value = password;
+    passwordText.textContent = passwordPrint;
 }
 
 // Button
-var generateBtn = document.querySelector("#generate");      //!! Only works once!
+var generateBtn = document.querySelector("#generate"); 
 generateBtn.addEventListener("click", writePassword); 
